@@ -57,6 +57,7 @@ print("The value of x is",x)
 #to convert a string into a number
 temp = input("Enter the value of x: ")
 x = float(temp)
+y = float(temp)
 print("The value of x is",x)
 #or
 x = float(input("Enter the value of x: "))
@@ -107,7 +108,7 @@ from math import *
 from math import numpylinalg
 
 #the Fourier transform module is called 
-from math import numpy.fft
+from math import numpyfft
 
 #2.3.1 THE IF STATEMENT
 #It will happen often in our computer programs that we want to do something only if a certain condition is met
