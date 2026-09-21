@@ -1,0 +1,71 @@
+#exercise 
+
+from numpy import pi 
+
+#initializeZtheta, omega and dt 
+Z= complex(1., 0)
+nsteps = 200
+omega = 1.
+dt = 2*pi/(nsteps*omega)
+print ('t={0}, Z = {1}, |Z| = {2}'.format(0., Z, abs(Z)))
+
+for k in range(nsteps):
+    Z *= (1+1j*omega*dt)
+print('t={0}, Z = {1}, |Z| = {2}'.format(k*dt, Z, abs(Z)))
+      
+    
+#t=0.0, Z = (1+0j), |Z| = 1.0 , t=6.2517693806436885, Z = (1.1036746878104915-0.002280042726219758j), |Z| = 1.1036770429380232
+       
+def double_nonvectorized(array): 
+    doubled = array.copy()
+    for i in range(len(array)):
+        doubled[i] = array[i] *2 
+    return doubled
+
+def double_vectorized(array):
+    return array*2
+
+import numpy as np 
+import time
+
+N=1000
+A = np.random.random((N, N))
+
+t= time.time()
+B = double_nonvectorized(A)
+t1= time.time()
+print('exec time of non vector code in s: ', t1-t)
+
+t= time.time()
+double_vectorized(A)
+t1 = time.time()
+print('exec time of vector code in s: ', t1-t)
+
+#exec time of non vector code in s:  0.0028111934661865234
+#exec time of vector code in s:  0.0009372234344482422
+import timeit
+#%timeit -r 5 -n 100 double_vectorized(A)
+#%timeit double_nonvectorized(A)
+
+# input ipython
+#exec time of non vector code in s:  0.0038259029388427734
+#exec time of vector code in s:  0.0014519691467285156
+#598 μs ± 82.3 μs per loop (mean ± std. dev. of 5 runs, 100 loops each)
+#1.5 ms ± 24.7 μsimport timeit
+
+num_runs = 10 
+
+# Notice the spaces and underscores in "from __main__ import ..."
+total_time = timeit.timeit(
+    stmt="double_vectorized(A)", 
+    setup="from __main__ import double_vectorized, A", 
+    number=num_runs
+)
+print("Vectorized average time per run: ", total_time / num_runs)
+
+total_time = timeit.timeit(
+    stmt="double_nonvectorized(A)", 
+    setup="from __main__ import double_nonvectorized, A", 
+    number=num_runs
+)
+print("Non-vectorized average time per run: ", total_time / num_runs)
