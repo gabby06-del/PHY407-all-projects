@@ -1,0 +1,34 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = 0
+sigma = 1.0
+N = 10000
+m = 50
+
+def myFunc(x1, sigma1, x2, sigma2):
+    myRandomArray1 = np.random.normal(x1, sigma1, N)
+    myRandomArray2 = np.random.normal(x2, sigma2, N)
+    myArray = myRandomArray1 + myRandomArray2
+    plt.figure()
+    plt.hist(myArray, m, histtype='stepfilled')
+    plt.title("Gaussian Distribution")
+    plt.savefig("myFunc.png")
+    plt.show()
+    
+    return myArray  
+myFunc(x, sigma, x, sigma)
+
+
+def myFunc2(x1, x2, C):
+    sigma_1 = np.abs(C * x1) 
+    sigma_2 = np.abs(C * x2) 
+    combined_array = myFunc(x1, sigma_1, x2, sigma_2)
+    plt.figure()
+    plt.hist(combined_array, bins=m, histtype='stepfilled')
+    plt.title(f"Scaled Distribution (C={C})")
+    plt.savefig("myFunc2.png")
+    plt.show()
+    return
+   
+myFunc2(x1=2.0, x2=4.0, C=1.0)

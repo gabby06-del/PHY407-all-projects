@@ -1,0 +1,44 @@
+time in seconds for N=  100 with loops:  0.5528593063354492
+time in seconds for N=  100 with dot:  0.0006992816925048828
+time in seconds for N=  500 with loops:  70.06527090072632
+time in seconds for N=  500 with dot:  0.002026796340942383
+time in seconds for N=  1000 with loops:  540.1527371406555
+time in seconds for N=  1000 with dot:  0.00594019889831543
+
+scontrol show job 323
+JobId=323 JobName=python-job
+   UserId=lcl_uotphy407s2323(1912323) GroupId=lcl_uotphy407(1910038) MCS_label=N/A
+   Priority=343388 Nice=0 Account=teach QOS=normal
+   JobState=COMPLETING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:10:16 TimeLimit=01:00:00 TimeMin=N/A
+   SubmitTime=2026-09-23T10:57:30 EligibleTime=2026-09-23T10:57:30
+   AccrueTime=2026-09-23T10:57:30
+   StartTime=2026-09-23T10:57:31 EndTime=2026-09-23T11:07:47 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-09-23T10:57:31 Scheduler=Main
+   Partition=compute AllocNode:Sid=teach-login01:3259754
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=teach01
+   BatchHost=teach01
+   NumNodes=1 NumCPUs=20 NumTasks=20 CPUs/Task=1 ReqB:S:C:T=0:0:*:*
+   ReqTRES=cpu=20,mem=175000M,node=1,billing=10
+   AllocTRES=cpu=20,node=1,billing=10
+   Socks/Node=* NtasksPerN:B:S:C=20:0:*:1 CoreSpec=*
+   MinCPUsNode=20 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null)
+   Command=/home/l/lcl_uotphy407/lcl_uotphy407s2323/lab_2/python-job.sh
+   SubmitLine=SBATCH --export=NONE --get-user-env -J python-job -D /home/l/lcl_uotphy407/lcl_uotphy407s2323/lab_2/ --comment=Submitted via Open Composer /home/l/lcl_uotphy407/lcl_uotphy407s2323/lab_2/python-job.sh
+   WorkDir=/home/l/lcl_uotphy407/lcl_uotphy407s2323/lab_2/
+   Comment=Submitted via Open Composer
+   StdErr=
+   StdIn=/dev/null
+   StdOut=/home/l/lcl_uotphy407/lcl_uotphy407s2323/lab_2//python_output_323.txt
+
+sacct -j 323
+JobID           JobName    Account    Elapsed  MaxVMSize     MaxRSS  SystemCPU    UserCPU ExitCode 
+------------ ---------- ---------- ---------- ---------- ---------- ---------- ---------- -------- 
+323          python-job      teach   00:10:16                        00:00.270  10:11.478      0:0 
+323.batch         batch      teach   00:10:16          0    136756K  00:00.270  10:11.478      0:0 
+323.extern       extern      teach   00:10:16                         00:00:00   00:00:00      0:0 
+
