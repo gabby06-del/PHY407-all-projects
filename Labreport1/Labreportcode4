@@ -1,0 +1,56 @@
+#QUESTION 4:SIMPLE NUMERICAL DIFFERENTION
+#Consider the function f(x) = exp (−x2) [as stated in assignment]
+import numpy as np
+import matplotlib.pyplot as plt
+def func(x):
+    return np.exp(-x**2)
+ 
+def exact_der(x):
+    return -2 * x * np.exp(-x**2)
+ 
+x_init = 0.5
+exact_val = exact_der(x_init)
+print("Analytical (exact) value of f'(0.5):", exact_val)
+# 17 values of h, from 10^-16 up to 10^0
+h_values = 10.0 ** np.arange(-16.0, 1.0)
+ 
+# Q4(a):
+
+rel_err_for = []
+for h in h_values:
+    f_num = (func(x_init + h) - func(x_init)) / h
+    err = abs((f_num - exact_val) / exact_val)
+    rel_err_for.append(err)
+    print(f"h = {h:<10.1e}  f_num = {f_num:<15.10f}  rel_err = {err:.10e}")
+rel_err_for = np.array(rel_err_for)
+ 
+min_i_for = np.argmin(rel_err_for)
+print(f"\nMinimum error occurs at h = {h_values[min_i_for]}," f"with error = {rel_err_for[min_i_for]}")
+
+# Q4(b): 
+
+rel_err_cen = []
+for h in h_values:
+    f_num = (func(x_init + h) - func(x_init - h)) / (2 * h)
+    err = abs((f_num - exact_val) / exact_val)
+    rel_err_cen.append(err)
+    print(f"h = {h:<10.1e}  f_num = {f_num:<15.10f}  rel_err = {err:.10e}")
+rel_err_cen = np.array(rel_err_cen)
+ 
+min_i_cen = np.argmin(rel_err_cen)
+print(f"\nMinimum error occurs at h = {h_values[min_i_cen]:.1e}," f"with error = {rel_err_cen[min_i_cen]:.10e}")
+ 
+ #Q4(c)
+
+plt.figure()
+plt.loglog(h_values, rel_err_for, label='Forward difference')
+plt.loglog(h_values, rel_err_cen, label='Central difference')
+plt.xlabel('h')
+plt.ylabel('Relative error')
+plt.title("Relative error vs h: forward vs central difference")
+plt.legend()
+plt.tight_layout()
+plt.savefig('q4c_plot.png')
+plt.show()
+
+ 

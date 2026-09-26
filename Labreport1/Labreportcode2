@@ -1,0 +1,72 @@
+#QUESTION2 EXPLORING ROUNDOFF ERROR
+
+#Q2(a)
+import numpy as np 
+import matplotlib.pyplot as plt 
+
+def P(u_set):
+    P= (1-u_set)**8 
+    return (1-u_set)**8 
+def Q(u_set):
+    Q= 1-8*u_set + 28*u_set**2 - 56*u_set**3 + 28*u_set**6 - 8*u_set**7 + u_set**8
+    return 1-8*u_set + 28*u_set**2 - 56*u_set**3 + 28*u_set**6 - 8*u_set**7 + u_set**8
+#using bounds set in assignment/lab report guide
+#i wasnt sure which type of array was best fit for this report so I did both linspace and np.sort
+set1 = np.linspace(0.97, 1.02, 500)
+set2 = np.sort(np.random.uniform(0.97, 1.02, 500))
+
+#figures for lab report 
+plt.figure()
+plt.plot(set1, P(set1))
+plt.ylabel("P(u)")
+plt.xlabel("U value: 0.98<U<1.02")
+plt.title("P(U) for 0.97< U < 1.02 for nplinspace")
+plt.savefig("P(U) for 0.97< U < 1.02 for nplinspace.png")
+plt.show()
+
+
+plt.figure()
+plt.plot(set1, Q(set1))
+plt.ylabel("Q(u)")
+plt.xlabel("U value: 0.98<U<1.02")
+plt.title("Q(U) for 0.97< U < 1.02 for nplinspace")
+plt.savefig("Q(U) for 0.97< U < 1.02 for nplinspace.png")
+plt.show()
+
+
+plt.figure()
+plt.plot(set2, P(set2))
+plt.ylabel("P(u)")
+plt.xlabel("U value: 0.98<U<1.02")
+plt.title("P(U) for 0.97< U < 1.02 for nprand")
+plt.savefig("P(U) for 0.97< U < 1.02 for nprand.png")
+plt.show()
+
+
+plt.figure()
+plt.plot(set2, Q(set2))
+plt.ylabel("Q(u)")
+plt.xlabel("U value: 0.98<U<1.02")
+plt.title("Q(U) for 0.97< U < 1.02 for nprand")
+plt.savefig("Q(U) for 0.97< U < 1.02 for nprand.png")
+plt.show()
+
+#Question 2(b)
+#did just linspace for this one
+set1 = np.linspace(0.97, 1.02, 500)
+
+def f(u_set):
+    f= (u_set**8) /((u_set**4)*(u_set**4))
+    return (u_set**8 )/((u_set**4)*(u_set**4))
+
+std_dev= np.std(f(set1))
+print("Numerical output for std dev:",std_dev)
+
+
+plt.figure()
+plt.plot(set1, f(set1)-1)
+plt.ylabel("f(u)")
+plt.xlabel("U value: 0.98<U<1.02")
+plt.title("f(U)-1 for 0.97< U < 1.02")
+plt.savefig("f(U)-1 for 0.97< U < 1.02.png")
+plt.show()

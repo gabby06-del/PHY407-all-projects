@@ -1,0 +1,97 @@
+import numpy as np 
+from math import sqrt
+
+# QUESTION 1(a)
+#import proper path when using code this is just the path on my computer
+cdata = np.loadtxt('/Users/alfredthebuttler/Desktop/PHY407/Labreport1/cdata.txt')
+#numpy.ndarray
+print(len(cdata))
+#100
+x = cdata
+n = len(cdata)
+#1. using Eqn.(2) from assignment 
+def std_err_2 (dataset):
+    n = len(dataset)
+    mean_x= (np.sum(dataset)/n)
+    var_2= np.sum((dataset-mean_x)**2)
+
+    if var_2 <= 0:
+        return 0
+    std_err_2 = sqrt((var_2)/(n-1))
+    return std_err_2
+
+result_2 = std_err_2(x)
+print("this is std dev 2 :", result_2)
+#2. using Eqn.(3) from assignment
+def std_err_3 (dataset):
+    n = len(dataset)
+    mean_dataset= ((np.sum(dataset)/n))
+    var_sum = np.sum(dataset**2) 
+    var_tot = ((var_sum - n*(mean_dataset)**2)) / (n-1)
+    if var_tot <= 0:
+        return 0
+    std_err_3= sqrt(var_tot)
+    return std_err_3
+result_3 = std_err_3(x)
+print("this is std dev 3", result_3)
+
+#now using numpy std dev package instead of manual loop
+y= np.std(x, ddof=1)
+x2= result_2
+x3=result_3
+rel_err_dev2= (x2-y)/y
+rel_err_dev3= (x3-y)/y
+print("Standard deviation numpy package:", y)
+print("Relative error for formula 2:", rel_err_dev2)
+print("Relative error for formula 3:", rel_err_dev3)
+
+# QUESTION 1(b)
+a1 = np.random.normal(0., 1., 2000)
+a2 = np.random.normal(1.e7, 1., 2000)
+print("Std err using formula 2 for a1:" , std_err_2(a1))
+print("Std err using formula 3 for a1:" , std_err_3(a1))
+print("Std err using formula 2 for a2:" , std_err_2(a2))
+print("Std err using formula 3 for a2:" , std_err_3(a2))
+
+def np_err (dataset):
+    return np.std(dataset, ddof=1)
+def rel_err (std_err, y):
+    rel_err=(std_err-y)/y
+    return rel_err
+
+rel_err_a1_2= rel_err(std_err_2(a1), np_err(a1))
+rel_err_a1_3= rel_err(std_err_3(a1), np_err(a1))
+rel_err_a2_2= rel_err(std_err_2(a2), np_err(a2))
+rel_err_a2_3= rel_err(std_err_3(a2), np_err(a2))
+
+print("Relative error for a1 for formula 2:", rel_err_a1_2)
+print("Relative error for a1 for formula 3:", rel_err_a1_3)
+print("Relative error for a2 for formula 2:", rel_err_a2_2)
+print("Relative error for a2 for formula 3:", rel_err_a2_3)
+
+# QUESTION 1(c): using math shifting idea for the one pass
+
+def std_err_3_shifted (dataset):
+    n = len(dataset)
+    if n <= 1: return 0
+    #using ka as the value that assigns the shift
+    K = dataset[0]
+    sum_w_shift = np.sum(dataset - K)
+    sum_sq_w_shift = np.sum((dataset - K)**2)
+    var_tot = (sum_sq_w_shift - (sum_w_shift**2) / n) / (n - 1)
+    if var_tot <= 0:
+        return 0
+    return sqrt(var_tot)
+
+err3_x = rel_err(std_err_3(x), np_err(x))
+err3_shifted_x = rel_err(std_err_3_shifted(x), np_err(x))
+print("Formula (3) Relative Error x:", err3_x)
+print("One-Pass Relative Error with Shift implemented x:", err3_shifted_x)
+err3_a1 = rel_err(std_err_3(a1), np_err(a1))
+err3_shifted_a1 = rel_err(std_err_3_shifted(a2), np_err(a2))
+print("Formula (3) Relative Error a2:", err3_a1)
+print("Shifted One-Pass Relative Error a1:", err3_shifted_a1)
+err3_a2 = rel_err(std_err_3(a2), np_err(a2))
+err3_shifted_a2 = rel_err(std_err_3_shifted(a2), np_err(a2))
+print("Formula (3) Relative Error a1:", err3_a2)
+print("Shifted One-Pass Relative Error a2:", err3_shifted_a2)
