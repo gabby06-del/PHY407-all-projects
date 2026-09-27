@@ -60,7 +60,7 @@ def f(u_set):
 std_dev= np.std(f(set1))
 print("Numerical output for std dev:",std_dev)
 
-
+#should result in a noisy graph around 1 to show roundoff error present 
 plt.figure()
 plt.plot(set1, f(set1)-1)
 plt.ylabel("f(u)")

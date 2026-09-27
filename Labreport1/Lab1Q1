@@ -10,6 +10,7 @@ from math import sqrt
 cdata = np.loadtxt('cdata.txt')
 x = cdata
 n = len(cdata)
+
 #1. using Eqn.(2) from assignment 
 def std_err_2 (dataset):
     n = len(dataset)

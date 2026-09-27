@@ -1,7 +1,7 @@
 #QUESTION 3: TRAPEZOIDAL AND SIMPSON'S RULE FOR INTEGRATION
 
 #Q3(a): The answer is pi or roughly 3.1416 (used wolfram alpha)
-#Q3(b)
+#Q3(b): Using trapezoidal rule and simpsons rule to get value of integrated function func(x) to highest accuracy with step size N=4
 import numpy as np
 import time
 
