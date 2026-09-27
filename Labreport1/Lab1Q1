@@ -3,9 +3,11 @@ from math import sqrt
 
 # QUESTION 1(a)
 #import proper path when using code this is just the path on my computer
-cdata = np.loadtxt('/Users/alfredthebuttler/Desktop/PHY407/Labreport1/cdata.txt')
+#cdata = np.loadtxt('/Users/alfredthebuttler/Desktop/PHY407/Labreport1/cdata.txt')
 #numpy.ndarray
+#len is 100
 #100
+cdata = np.loadtxt('cdata.txt')
 x = cdata
 n = len(cdata)
 #1. using Eqn.(2) from assignment 
