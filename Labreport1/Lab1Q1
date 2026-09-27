@@ -5,7 +5,6 @@ from math import sqrt
 #import proper path when using code this is just the path on my computer
 cdata = np.loadtxt('/Users/alfredthebuttler/Desktop/PHY407/Labreport1/cdata.txt')
 #numpy.ndarray
-print(len(cdata))
 #100
 x = cdata
 n = len(cdata)
@@ -21,7 +20,7 @@ def std_err_2 (dataset):
     return std_err_2
 
 result_2 = std_err_2(x)
-print("this is std dev 2 :", result_2)
+print("Standard deviation for cdata using formula 2 :", result_2)
 #2. using Eqn.(3) from assignment
 def std_err_3 (dataset):
     n = len(dataset)
@@ -33,7 +32,7 @@ def std_err_3 (dataset):
     std_err_3= sqrt(var_tot)
     return std_err_3
 result_3 = std_err_3(x)
-print("this is std dev 3", result_3)
+print("Standard deviation for cdata using formula 3 :", result_3)
 
 #now using numpy std dev package instead of manual loop
 y= np.std(x, ddof=1)
@@ -41,17 +40,17 @@ x2= result_2
 x3=result_3
 rel_err_dev2= (x2-y)/y
 rel_err_dev3= (x3-y)/y
-print("Standard deviation numpy package:", y)
+print("Standard deviation for cdata using numpy package:", y)
 print("Relative error for formula 2:", rel_err_dev2)
 print("Relative error for formula 3:", rel_err_dev3)
 
 # QUESTION 1(b)
 a1 = np.random.normal(0., 1., 2000)
 a2 = np.random.normal(1.e7, 1., 2000)
-print("Std err using formula 2 for a1:" , std_err_2(a1))
-print("Std err using formula 3 for a1:" , std_err_3(a1))
-print("Std err using formula 2 for a2:" , std_err_2(a2))
-print("Std err using formula 3 for a2:" , std_err_3(a2))
+print("Std error using formula 2 for a1:" , std_err_2(a1))
+print("Std error using formula 3 for a1:" , std_err_3(a1))
+print("Std error using formula 2 for a2:" , std_err_2(a2))
+print("Std error using formula 3 for a2:" , std_err_3(a2))
 
 def np_err (dataset):
     return np.std(dataset, ddof=1)
@@ -88,7 +87,7 @@ err3_shifted_x = rel_err(std_err_3_shifted(x), np_err(x))
 print("Formula (3) Relative Error x:", err3_x)
 print("One-Pass Relative Error with Shift implemented x:", err3_shifted_x)
 err3_a1 = rel_err(std_err_3(a1), np_err(a1))
-err3_shifted_a1 = rel_err(std_err_3_shifted(a2), np_err(a2))
+err3_shifted_a1 = rel_err(std_err_3_shifted(a1), np_err(a1))
 print("Formula (3) Relative Error a2:", err3_a1)
 print("Shifted One-Pass Relative Error a1:", err3_shifted_a1)
 err3_a2 = rel_err(std_err_3(a2), np_err(a2))

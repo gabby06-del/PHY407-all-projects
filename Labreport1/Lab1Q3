@@ -18,8 +18,8 @@ stepsize_h_init=(b - a) / N_init
 x_init =np.linspace(a, b, N_init+1)
 y_init =func(x_init)
 
-I_trap_init= (stepsize_h_init / 2) * (y_init[0] + 2 * np.sum(y_init[1:N_init-1]) + y_init[N_init-1])
-I_simp_init= (stepsize_h_init / 3) * (y_init[0] + 2 * np.sum(y_init[:N_init-2:2]) + 4 * np.sum(y_init[1:N_init-1:2]) + y_init[N_init-1])
+I_trap_init= (stepsize_h_init / 2) * (y_init[0] + 2 * np.sum(y_init[1:N_init]) + y_init[N_init])
+I_simp_init= (stepsize_h_init / 3) * (y_init[0] + 2 * np.sum(y_init[2:N_init:2]) + 4 * np.sum(y_init[1:N_init:2]) + y_init[N_init])
 
 print("Initial calculation with N = 4:")
 print("trapezoidal rule: ", I_trap_init)
@@ -41,7 +41,7 @@ for n in range(2, 30):
     err_trap = abs(I_trap_rule - true_val)
     ex_time_ms_trap = (t_end - t_start) * 1000 #Multiplied by 1000 to get miliseconds which has a higher accuracy
     
-    if err_trap < target_err:
+    if err_trap <= target_err:
         print("Target reached at n =", n, "N =", N)
         print("Value calculated for trap:", I_trap_rule)
         print("Abs err for trap:", err_trap)
@@ -63,7 +63,7 @@ for n in range(2, 30):
     err_simp = abs(I_simp_rule - true_val)
     ex_time_ms_simp = (t_end - t_start) * 1000 #Multiplied by 1000 to get miliseconds which has a higher accuracy
     
-    if err_simp < target_err:
+    if err_simp <= target_err:
         print("Target reached at n =", n, "N =", N)
         print("Value calculated for simp:", I_simp_rule)
         print("Abs err for simp:", err_simp)
@@ -90,6 +90,6 @@ I_trap_init_2= (stepsize_h_init_2 / 2) * (y_init_2[0] + 2 * np.sum(y_init_2[1:N_
 ϵ_2 = (I_trap_init_2 - I_trap_init_1 )/3
 
 print("I1 trapezoidal (N1 = 16):", I_trap_init_1)
-print("I2 trapezoidal (N2 = 31):", I_trap_init_2)
+print("I2 trapezoidal (N2 = 32):", I_trap_init_2)
 print("Err ϵ2: ",ϵ_2)
 

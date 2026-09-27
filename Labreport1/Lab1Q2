@@ -8,8 +8,8 @@ def P(u_set):
     P= (1-u_set)**8 
     return (1-u_set)**8 
 def Q(u_set):
-    Q= 1-8*u_set + 28*u_set**2 - 56*u_set**3 + 28*u_set**6 - 8*u_set**7 + u_set**8
-    return 1-8*u_set + 28*u_set**2 - 56*u_set**3 + 28*u_set**6 - 8*u_set**7 + u_set**8
+    return (1 - 8*u_set + 28*u_set**2 - 56*u_set**3 + 70*u_set**4
+            - 56*u_set**5 + 28*u_set**6 - 8*u_set**7 + u_set**8)
 #using bounds set in assignment/lab report guide
 #i wasnt sure which type of array was best fit for this report so I did both linspace and np.sort
 set1 = np.linspace(0.97, 1.02, 500)
