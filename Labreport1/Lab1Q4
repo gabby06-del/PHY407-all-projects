@@ -41,7 +41,7 @@ min_i_cen = np.argmin(rel_err_cen)
 print(f"\nMinimum error occurs at h = {h_values[min_i_cen]:.1e}," f"with error = {rel_err_cen[min_i_cen]:.10e}")
  
  #Q4(c)
-
+#I included labels to better understand the difference in trends between forward difference and central difference
 plt.figure()
 plt.loglog(h_values, rel_err_for, label='Forward difference')
 plt.loglog(h_values, rel_err_cen, label='Central difference')
