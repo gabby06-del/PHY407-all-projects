@@ -58,7 +58,7 @@ def f(u_set):
     return (u_set**8 )/((u_set**4)*(u_set**4))
 
 std_dev= np.std(f(set1))
-print("Numerical output for std dev:",std_dev)
+print("Numerical output for std dev for f(set1):",std_dev)
 
 #should result in a noisy graph around 1 to show roundoff error present 
 plt.figure()
