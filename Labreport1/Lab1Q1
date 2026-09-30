@@ -3,77 +3,77 @@ from math import sqrt
 
 # QUESTION 1(a)
 #import proper path when using code this is just the path on my computer
-#cdata = np.loadtxt('/Users/alfredthebuttler/Desktop/PHY407/Labreport1/cdata.txt')
+cdata = np.loadtxt('/Users/alfredthebuttler/Desktop/PHY407/Labreport1/cdata.txt')
 #numpy.ndarray
 #len is 100
 #100
-cdata = np.loadtxt('cdata.txt')
-x = cdata
-n = len(cdata)
+#cdata = np.loadtxt('cdata.txt')
+cdata_array = cdata
+n = len(cdata_array)
 
-#1. using Eqn.(2) from assignment 
-def std_err_2 (dataset):
+#1. using Formula.(2) from assignment 
+def std_err_formula_2 (dataset):
     n = len(dataset)
-    mean_x= (np.sum(dataset)/n)
-    var_2= np.sum((dataset-mean_x)**2)
+    mean_val= (np.sum(dataset)/n)
+    var_sum= np.sum((dataset-mean_val)**2)
 
-    if var_2 <= 0:
+    if var_sum <= 0:
         return 0
-    std_err_2 = sqrt((var_2)/(n-1))
-    return std_err_2
+    return sqrt((var_sum)/(n-1))
 
-result_2 = std_err_2(x)
+result_2 = std_err_formula_2(cdata_array)
 print("Standard deviation for cdata using formula 2 :", result_2)
+
 #2. using Eqn.(3) from assignment
-def std_err_3 (dataset):
+def std_err_formula_3 (dataset):
     n = len(dataset)
-    mean_dataset= ((np.sum(dataset)/n))
-    var_sum = np.sum(dataset**2) 
-    var_tot = ((var_sum - n*(mean_dataset)**2)) / (n-1)
-    if var_tot <= 0:
+    mean_val= ((np.sum(dataset)/n))
+    sum_of_squares = np.sum(dataset**2) 
+    variance = ((sum_of_squares- n*(mean_val)**2)) / (n-1)
+    if variance <= 0:
         return 0
-    std_err_3= sqrt(var_tot)
-    return std_err_3
-result_3 = std_err_3(x)
+    return sqrt(variance)
+result_3 = std_err_formula_3 (cdata_array)
 print("Standard deviation for cdata using formula 3 :", result_3)
 
 #now using numpy std dev package instead of manual loop
-y= np.std(x, ddof=1)
+numpy_st_array= np.std(cdata_array, ddof=1)
 x2= result_2
 x3=result_3
-rel_err_dev2= (x2-y)/y
-rel_err_dev3= (x3-y)/y
-print("Standard deviation for cdata using numpy package:", y)
+rel_err_dev2= (x2-numpy_st_array)/numpy_st_array
+rel_err_dev3= (x3-numpy_st_array)/numpy_st_array
+print("Standard deviation for cdata using numpy package:", numpy_st_array)
 print("Relative error for formula 2:", rel_err_dev2)
 print("Relative error for formula 3:", rel_err_dev3)
 
 # QUESTION 1(b)
-a1 = np.random.normal(0., 1., 2000)
-a2 = np.random.normal(1.e7, 1., 2000)
-print("Std error using formula 2 for a1:" , std_err_2(a1))
-print("Std error using formula 3 for a1:" , std_err_3(a1))
-print("Std error using formula 2 for a2:" , std_err_2(a2))
-print("Std error using formula 3 for a2:" , std_err_3(a2))
+low_mean_data = np.random.normal(0., 1., 2000)
+high_mean_data = np.random.normal(1.e7, 1., 2000)
+print("Std error using formula 2 for a1:" , std_err_formula_2(low_mean_data))
+print("Std error using formula 3 for a1:" , std_err_formula_3(low_mean_data))
+print("Std error using formula 2 for a2:" , std_err_formula_2(high_mean_data))
+print("Std error using formula 3 for a2:" , std_err_formula_3(high_mean_data))
 
-def np_err (dataset):
+def np_std(dataset):
     return np.std(dataset, ddof=1)
-def rel_err (std_err, y):
-    rel_err=(std_err-y)/y
-    return rel_err
+def compute_relative_error(experimental_val, true_val):
+    if true_val == 0: 
+        return 0.0
+    return (experimental_val - true_val) / true_val
 
-rel_err_a1_2= rel_err(std_err_2(a1), np_err(a1))
-rel_err_a1_3= rel_err(std_err_3(a1), np_err(a1))
-rel_err_a2_2= rel_err(std_err_2(a2), np_err(a2))
-rel_err_a2_3= rel_err(std_err_3(a2), np_err(a2))
+rel_err_lowmean_f2= compute_relative_error(std_err_formula_2(low_mean_data), np_std(low_mean_data))
+rel_err_lowmean_f3= compute_relative_error(std_err_formula_3(low_mean_data), np_std(low_mean_data))
+rel_err_highmean_f2= compute_relative_error(std_err_formula_2(high_mean_data), np_std(high_mean_data))
+rel_err_highmean_f3= compute_relative_error(std_err_formula_3(high_mean_data), np_std(high_mean_data))
 
-print("Relative error for a1 for formula 2:", rel_err_a1_2)
-print("Relative error for a1 for formula 3:", rel_err_a1_3)
-print("Relative error for a2 for formula 2:", rel_err_a2_2)
-print("Relative error for a2 for formula 3:", rel_err_a2_3)
+print("Relative error for low_mean_data for formula 2:", rel_err_lowmean_f2)
+print("Relative error for low_mean_data for formula 3:", rel_err_lowmean_f3)
+print("Relative error for high_mean_data for formula 2:", rel_err_highmean_f2)
+print("Relative error for high_mean_data for formula 3:", rel_err_highmean_f3)
 
 # QUESTION 1(c): using math shifting idea for the one pass
 
-def std_err_3_shifted (dataset):
+def std_dev_shifted (dataset):
     n = len(dataset)
     if n <= 1: return 0
     #using ka as the value that assigns the shift
@@ -85,15 +85,15 @@ def std_err_3_shifted (dataset):
         return 0
     return sqrt(var_tot)
 
-err3_x = rel_err(std_err_3(x), np_err(x))
-err3_shifted_x = rel_err(std_err_3_shifted(x), np_err(x))
-print("Formula (3) Relative Error x:", err3_x)
-print("One-Pass Relative Error with Shift implemented x:", err3_shifted_x)
-err3_a1 = rel_err(std_err_3(a1), np_err(a1))
-err3_shifted_a1 = rel_err(std_err_3_shifted(a1), np_err(a1))
-print("Formula (3) Relative Error a2:", err3_a1)
-print("Shifted One-Pass Relative Error a1:", err3_shifted_a1)
-err3_a2 = rel_err(std_err_3(a2), np_err(a2))
-err3_shifted_a2 = rel_err(std_err_3_shifted(a2), np_err(a2))
-print("Formula (3) Relative Error a1:", err3_a2)
-print("Shifted One-Pass Relative Error a2:", err3_shifted_a2)
+err3_x = compute_relative_error(std_err_formula_3(cdata_array), np_std(cdata_array))
+err3_shifted_cdataarray = compute_relative_error(std_dev_shifted(cdata_array), np_std(cdata_array))
+print("Formula (3) Relative Error cdata array:", err3_x)
+print("One-Pass Relative Error with Shift implemented cdata array:", err3_shifted_cdataarray)
+err3_a1 = compute_relative_error(std_err_formula_3(low_mean_data), np_std(low_mean_data))
+err3_shifted_lowmean = compute_relative_error(std_dev_shifted(low_mean_data), np_std(low_mean_data))
+print("Formula (3) Relative Error Low Mean Data:", err3_a1)
+print("Shifted One-Pass Relative Error Low Mean Data:", err3_shifted_lowmean)
+err3_a2 = compute_relative_error(std_err_formula_3(high_mean_data), np_std(high_mean_data))
+err3_shifted_highmean = compute_relative_error(std_dev_shifted(high_mean_data), np_std(high_mean_data))
+print("Formula (3) Relative Error High Mean Data:", err3_a2)
+print("Shifted One-Pass Relative Error High Mean Data:", err3_shifted_highmean)

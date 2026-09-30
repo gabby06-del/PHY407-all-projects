@@ -11,12 +11,12 @@ def Q(u_set):
             - 56*u_set**5 + 28*u_set**6 - 8*u_set**7 + u_set**8)
 #using bounds set in assignment/lab report guide
 #i wasnt sure which type of array was best fit for this report so I did both linspace and np.sort
-set1 = np.linspace(0.97, 1.02, 500)
-set2 = np.sort(np.random.uniform(0.97, 1.02, 500))
+set_linspace = np.linspace(0.97, 1.02, 500)
+set_uniform_random = np.sort(np.random.uniform(0.97, 1.02, 500))
 
 #figures for lab report 
 plt.figure()
-plt.plot(set1, P(set1))
+plt.plot(set_linspace, P(set_uniform_random))
 plt.ylabel("P(u)")
 plt.xlabel("U value: 0.98<U<1.02")
 plt.title("P(U) for 0.97< U < 1.02 for nplinspace")
@@ -25,7 +25,7 @@ plt.show()
 
 
 plt.figure()
-plt.plot(set1, Q(set1))
+plt.plot(set_linspace, Q(set_linspace))
 plt.ylabel("Q(u)")
 plt.xlabel("U value: 0.98<U<1.02")
 plt.title("Q(U) for 0.97< U < 1.02 for nplinspace")
@@ -34,7 +34,7 @@ plt.show()
 
 
 plt.figure()
-plt.plot(set2, P(set2))
+plt.plot(set_uniform_random, P(set_uniform_random))
 plt.ylabel("P(u)")
 plt.xlabel("U value: 0.98<U<1.02")
 plt.title("P(U) for 0.97< U < 1.02 for nprand")
@@ -43,7 +43,7 @@ plt.show()
 
 
 plt.figure()
-plt.plot(set2, Q(set2))
+plt.plot(set_uniform_random, Q(set_uniform_random))
 plt.ylabel("Q(u)")
 plt.xlabel("U value: 0.98<U<1.02")
 plt.title("Q(U) for 0.97< U < 1.02 for nprand")
@@ -52,17 +52,17 @@ plt.show()
 
 #Question 2(b)
 #did just linspace for this one
-set1 = np.linspace(0.97, 1.02, 500)
+set_linspace_2b = np.linspace(0.97, 1.02, 500)
 
 def f(u_set):
     return (u_set**8 )/((u_set**4)*(u_set**4))
 
-std_dev= np.std(f(set1))
-print("Numerical output for std dev for f(set1):",std_dev)
+std_dev= np.std(f(set_linspace_2b))
+print("Numerical output for std dev for f(set_linspace):",std_dev)
 
 #should result in a noisy graph around 1 to show roundoff error present 
 plt.figure()
-plt.plot(set1, f(set1)-1)
+plt.plot(set_linspace_2b, f(set_linspace_2b)-1)
 plt.ylabel("f(u)")
 plt.xlabel("U value: 0.97<U<1.02")
 plt.title("f(U)-1 for 0.97< U < 1.02")

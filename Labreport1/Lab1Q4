@@ -23,10 +23,9 @@ for h in h_values:
     rel_err_for.append(err)
     print(f"h = {h:<10.1e}  f_num = {f_num:<15.10f}  rel_err = {err:.10e}")
 rel_err_for = np.array(rel_err_for)
- 
 min_i_for = np.argmin(rel_err_for)
-print(f"\nMinimum error occurs at h = {h_values[min_i_for]}," f"with error = {rel_err_for[min_i_for]}")
-
+print(f"Minimum error occurs at h = {h_values[min_i_for]:.1e}, with error = {rel_err_for[min_i_for]:.10}")
+#h has precision up to one decomal place and error has precision up to ten decimal places
 # Q4(b): 
 
 rel_err_cen = []
@@ -38,7 +37,8 @@ for h in h_values:
 rel_err_cen = np.array(rel_err_cen)
  
 min_i_cen = np.argmin(rel_err_cen)
-print(f"\nMinimum error occurs at h = {h_values[min_i_cen]:.1e}," f"with error = {rel_err_cen[min_i_cen]:.10e}")
+print(f"Minimum error occurs at h = {h_values[min_i_cen]:.1e}, with error = {rel_err_cen[min_i_cen]:.10e}")
+#h has precision up to one decomal place and error has precision up to ten decimal places
  
  #Q4(c)
 #I included labels to better understand the difference in trends between forward difference and central difference
