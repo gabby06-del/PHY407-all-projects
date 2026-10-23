@@ -1,0 +1,61 @@
+import numpy as np
+import matplotlib.pyplot as plt
+#a. 
+def eqn(x, c):
+    return 1 - np.exp(-c*x)
+
+def relax(c, x0=1.0, err_tol=1e-6):
+    x = x0
+    iterations = 0
+    while True:
+        x_new = eqn(x, c)
+        iterations += 1
+        if abs(x_new - x) < err_tol:
+            return x_new, iterations
+        x = x_new
+    return x, max_iter   
+
+x, n_iter = relax(c=2)
+print("x =", x)
+print("number of iterations =", n_iter)
+
+# b. 
+c_rel = np.linspace(0, 3, 301)    #used 301 steps instead of arange to avoid rounding errors 
+x_rel = np.zeros_like(c_rel)
+it_rel = np.zeros(len(c_rel), dtype=int)
+
+for i, c in enumerate(c_rel):
+    x_rel[i], it_rel[i] = relax(c)
+
+plt.figure()
+plt.plot(c_rel, x_rel, color='purple')
+plt.axvline(1, color='blue', ls=':', label='c = 1')#first nonzero c marked to see change in behaviour
+plt.xlabel('c')
+plt.ylabel('x')
+plt.grid()
+plt.legend()
+plt.savefig('q4_b.png')
+plt.show()
+
+#c. 
+#for overrelaxation it is essentially the same same gode as relxation but it has the omega
+def overrelax(c, x0=1.0, omega= 0.0, err_tol=1e-6):
+    x = x0
+    iterations = 0
+    while True:
+        x_new = (1+omega) * eqn(x, c) - omega*x
+        iterations += 1
+        if abs(x_new - x) < err_tol:
+            return x_new, iterations
+        x = x_new
+    return x, max_iter   
+
+x, n_iter = overrelax(2, omega= 0.0)
+print("omega = 0  x =", x)
+print("number of iterations =", n_iter)
+
+for omega in [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8]:
+    x, n_iter = overrelax(2, omega=omega)
+    print(f"omega = {omega:.1f}   x = {x:.7f}   iterations = {n_iter}")
+
+

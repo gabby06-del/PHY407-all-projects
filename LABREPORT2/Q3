@@ -1,0 +1,41 @@
+import numpy as np 
+import matplotlib.pyplot as plt
+
+#a. 
+x = np.array([-38.4, -35.28, -25.58, -28.80, -30.06, -1.00, 1.00])
+y = np.array([27.71, 17.27, 30.68, 31.50, 10.53, 10.83, 6.64])
+
+X = np.column_stack([x**2, x*y, y**2, x, y, np.ones_like(x)])
+S = np.dot(X.T, X)
+S_inv = np.linalg.inv(S)
+#because of the coeeficients
+Y = np.zeros((6, 6))
+Y[0, 2] = Y[2, 0] = 2
+Y[1, 1] = -1
+E, V = np.linalg.eig(np.dot(S_inv, Y))
+print("eigenvalues:", E)
+
+i = np.argmax(E.real) #best fit
+a = V[:, i].real 
+#a is eequal to the coefficients (A, 2B, C, etc)
+
+#b. 
+def elipse(x, y, a):
+    return (a[0]*x**2 + a[1]*x*y + a[2]*y**2
+            + a[3]*x + a[4]*y + a[5])
+xx, yy = np.meshgrid(np.linspace(-60, 30, 600), np.linspace(-30, 60, 600))
+#meshgrid turns linspace lists into a grid 
+#could do explicitly but thought it would take longer if i did every specific point in the ellipse by hand and wanted to save time and wanted to make it more efficient
+print(elipse(x, y, a))
+
+plt.figure()
+plt.contour(xx, yy, elipse(xx, yy, a), levels=[0], colors='purple', label='best-fit ellipse')  
+plt.plot(x, y, 'o', color='pink', label='measured points (data given)')      
+plt.plot(0, 0, '*', color='gold', label='Sun (what its orbiting around)')    #0, 0 because it is the 'origin'
+plt.plot([], [], color='purple', label='best-fit ellipse')                                                   
+plt.xlabel('x (AU= $1.496 * 10^{11}$)')
+plt.ylabel('y (AU= $1.496 * 10^{11}$)')
+plt.grid()
+plt.legend()
+plt.savefig('q3b.png')
+plt.show()

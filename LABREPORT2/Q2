@@ -1,0 +1,103 @@
+#sanity checls
+import numpy as np
+from SolveLinear import PartialPivot 
+import time
+import matplotlib.pyplot as plt
+# a. (code in SolveLinear.py file)
+# b. 
+#Av = x
+A = ([1, 8, 9], [0, 9, 3],[7, 6, 3])
+v = [ 0.5, 1.0, 1.5]
+#using the written code from PartialPivot to find x solution for given A and v 
+par_sol= PartialPivot(A, v)
+print(par_sol)
+#to sanity check that my partial pivoting code had the correct outputs I took the dot product of X solutions and A to ensure I get back v
+sanity = np.dot( A, par_sol)
+print(sanity)
+
+#c.
+Ns = [10, 20, 30, 40, 50, 100, 150, 200, 250, 300, 350, 400] #didnt work with just saying N=100 and then A = np.random.rand(N, N)
+t_partial = []
+t_linalg = []
+err_partial_list = []
+err_linalg_list = []
+for N in Ns:
+    A = np.random.rand(N, N)
+    v = np.random.rand(N)
+
+#partial pivot 
+    t_start_part = time.perf_counter()
+    x_soln_partialpivot = PartialPivot(A, v)
+    t_end_part = time.perf_counter()
+    time_ms_partial = (t_end_part - t_start_part) * 1000 #Multiplied by 1000 to get miliseconds which has a higher accuracy
+    t_partial.append(time_ms_partial) 
+    print('Solution using PartialPivot:', x_soln_partialpivot)
+    print('Time taken to excecute PartialPivot:', time_ms_partial)
+
+#linalg.solve
+    t_start_lin = time.perf_counter()
+    x_soln_linalg= np.linalg.solve(A, v)
+    t_end_lin = time.perf_counter()
+    time_ms_linalg = (t_end_lin - t_start_lin) * 1000 #Multiplied by 1000 to get miliseconds which has a higher accuracy
+    t_linalg.append(time_ms_linalg)
+    print('Solution using np.linalg.solve: ', x_soln_linalg)
+    print('Time taken to excecute np.linalg.solve:',time_ms_linalg )
+
+#error associated with each method 
+    error_partial = np.mean(abs(v - np.dot(A, x_soln_partialpivot)))
+    err_partial_list.append(error_partial)
+    print('Error associated with PartialPivot solution:', error_partial)
+    error_linalg = np.mean(abs(v - np.dot(A, x_soln_linalg)))
+    err_linalg_list.append(error_linalg)
+    print('Error associated with np.linalg solution:', error_linalg)
+
+# plotting 
+plt.figure()
+plt.loglog(Ns, t_linalg, 'o--', label='np.linalg.solve', color='pink')
+plt.loglog(Ns, t_partial, 's--', label='PartialPivot', color='purple')
+plt.grid(True, which='both')
+plt.xlabel('N')
+plt.ylabel('Run time (ms)')
+plt.legend()
+plt.savefig('q2c.png')
+plt.show()
+
+plt.figure()
+plt.loglog(Ns, err_partial_list, 'o--', label='PartialPivot', color='pink')
+plt.loglog(Ns, err_linalg_list, 's--', label='np.linalg.solve', color='purple')
+plt.grid(True, which='both')
+plt.xlabel('N')
+plt.ylabel('Mean |v - Ax|')
+plt.legend()
+plt.savefig('q2c_errors.png')
+plt.show()
+
+#d.
+
+N, t_partial, t_linalg, err_partial, err_linalg = np.loadtxt(
+    '/Users/alfredthebuttler/Desktop/PHY407/LABREPORT2/q2d_results.txt',
+    unpack=True)
+
+
+print(len(N), len(t_partial), len(t_linalg), len(err_partial), len(err_linalg))  
+# run time
+plt.figure()
+plt.loglog(N, t_linalg, 'o--', label='np.linalg.solve', color='hotpink')
+plt.loglog(N, t_partial, 's--', label='PartialPivot', color='purple')
+plt.grid(True, which='both')
+plt.xlabel('N')
+plt.ylabel('Run time (ms)')
+plt.legend()
+plt.savefig('q2d_time.png')
+plt.show()
+
+# error
+plt.figure()
+plt.loglog(N, err_partial, 'o--', label='PartialPivot', color='hotpink')
+plt.loglog(N, err_linalg, 's--', label='np.linalg.solve', color='purple')
+plt.grid(True, which='both')
+plt.xlabel('N')
+plt.ylabel('Mean |v - Ax|')
+plt.legend()
+plt.savefig('q2d_errors.png')
+plt.show()

@@ -1,0 +1,24 @@
+import numpy as np
+def CircuitMatrix(R_, C_):
+  
+   # R_ [float]: list of resistors R1 to R5
+    #C_ [complex]: list of capacitances C1 and C2
+   
+    A = np.empty((3, 3), complex)
+
+    A[0, 0] = 1./R[0] + 1./R[3] + C[0]
+    A[0, 1] = -C[0]
+    A[0, 2] = 0.
+
+    A[1, 0] = -C[0]
+    A[1, 1] = 1./R[1] + 1./R[4] + C[1]
+    A[0, 2] = -C[1]
+
+    A[2, 0] = 0.
+    A[2, 1] = -C[1]
+    A[2, 2] = 1./R[2] + 1./R[5] + C[1]
+    
+
+    return A
+
+
