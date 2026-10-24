@@ -15,13 +15,13 @@ def period(x0, N):
     return sum(4 * w / g(x, x0))
 
 T8= period(0.01, 8)
-print(T8)
+print("T for N = 16:", T8)
 T16 = period(0.01, 16)
-print(T16)
+print("T for N = 16:", T16)
 
 frac_e_est = abs(T16-T8)/T16
 
-print(frac_e_est)
+print("Fractional error estimate:", frac_e_est)
 
 # b. 
 
